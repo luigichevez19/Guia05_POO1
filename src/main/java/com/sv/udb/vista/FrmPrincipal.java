@@ -238,7 +238,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-      if(!txtNombre.getText().trim().isEmpty() && !txtDescricion.getText().trim().isEmpty())
+      if(!txtNombre.getText().trim().isEmpty() && !txtDescricion.getText().trim().isEmpty() && txtCodigo.getText().trim().isEmpty())
       {
      
         try 
