@@ -10,6 +10,7 @@ import com.sv.udb.modelo.Equipos;
 import com.sv.udb.recursos.Conexion;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,6 +24,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     public FrmPrincipal() {
         initComponents();
         this.setLocationRelativeTo(null);
+        txtCodigo.enable(false);
+         
     }
 
     /**
@@ -47,9 +50,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
         txtNombre = new javax.swing.JTextField();
         txtDescricion = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblEquipos = new javax.swing.JTable();
         btnSave = new javax.swing.JButton();
         btnRefresh = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
 
         jMenu1.setText("File");
@@ -69,7 +75,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jLabel3.setText("Descripción:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblEquipos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -88,19 +94,50 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
+        tblEquipos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblEquiposMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblEquipos);
+        if (tblEquipos.getColumnModel().getColumnCount() > 0) {
+            tblEquipos.getColumnModel().getColumn(1).setResizable(false);
         }
 
-        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sv/udb/recursos/save.png"))); // NOI18N
+        btnSave.setText("Guardar");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveActionPerformed(evt);
             }
         });
 
-        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sv/udb/recursos/refresh.png"))); // NOI18N
+        btnRefresh.setText("Refresh");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+
+        btnActualizar.setText("Modificar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
+        btnDelete.setText("Eliminar");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -110,21 +147,29 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblCodigo)
-                            .addComponent(lblNombre)
-                            .addComponent(jLabel3)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                            .addComponent(txtDescricion)
-                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnRefresh)
-                            .addComponent(btnSave))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                                .addComponent(txtDescricion))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblCodigo)
+                                        .addComponent(lblNombre)
+                                        .addComponent(jLabel3)
+                                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnActualizar)
+                                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(btnLimpiar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,10 +187,16 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtDescricion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnSave)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSave)
+                    .addComponent(btnActualizar))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRefresh)
+                    .addComponent(btnDelete))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnRefresh)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnLimpiar)
+                .addContainerGap(45, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -158,11 +209,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 503, Short.MAX_VALUE)
+            .addGap(0, 620, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 304, Short.MAX_VALUE)
+            .addGap(0, 311, Short.MAX_VALUE)
         );
 
         jTabbedPane2.addTab("Jugadores", jPanel2);
@@ -187,6 +238,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+      if(!txtNombre.getText().trim().isEmpty() && !txtDescricion.getText().trim().isEmpty())
+      {
+     
         try 
         {
             Equipos obj = new Equipos();
@@ -195,6 +249,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         if(new EquipoCtrl().guar(obj))
         {
         JOptionPane.showMessageDialog(this, "Guardado exitoso");
+        Limpiar();
         }
         else
         {
@@ -205,7 +260,109 @@ public class FrmPrincipal extends javax.swing.JFrame {
         {
              JOptionPane.showMessageDialog(this, e.getMessage());
         }
+      }
+       else
+      {
+          System.out.println("revise que este lleno");
+      }
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+      Refresh2();
+    }//GEN-LAST:event_btnRefreshActionPerformed
+    public void Refresh2 ()
+    {
+         try 
+        {
+      DefaultTableModel model = (DefaultTableModel)this.tblEquipos.getModel();
+      while(model.getRowCount()>0){model.removeRow(0);}//Limpiando modelo
+      for(Equipos temp: new EquipoCtrl().ver())
+      {
+      model.addRow(new Object[]{temp,temp.getDescEqui()} );
+      }    
+        } 
+        catch (Exception e) 
+        {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    private void tblEquiposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEquiposMouseClicked
+    int fila = this.tblEquipos.getSelectedRow();
+    if(fila >= 0)
+    {
+    Equipos obj = (Equipos) this.tblEquipos.getValueAt(fila,0);
+    this.txtCodigo.setText(String.valueOf(obj.getCodiEqui()));
+    this.txtNombre.setText(obj.getNombEqui());
+    this.txtDescricion.setText(obj.getDescEqui());
+    }
+    }//GEN-LAST:event_tblEquiposMouseClicked
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+    if(!txtCodigo.getText().trim().isEmpty() && !txtNombre.getText().trim().isEmpty() 
+    && !txtDescricion.getText().trim().isEmpty())
+    {
+        try 
+        {
+        Equipos obj = new Equipos();
+        obj.setCodiEqui(Integer.parseInt(txtCodigo.getText()));
+        obj.setNombEqui(txtNombre.getText());
+        obj.setDescEqui(txtDescricion.getText());
+        if(new EquipoCtrl().actu(obj))
+        {
+        JOptionPane.showMessageDialog(this,"Actualizado existoso");
+        Refresh2();
+        }
+        else
+        {
+        JOptionPane.showMessageDialog(this,"Errors inesperado intente otra vez");
+        }
+        }
+        catch (Exception e) 
+        {
+        
+        }
+    }
+    else
+    {
+    JOptionPane.showMessageDialog(this, "Porfavor seleccione el elemento a modificar");
+    }
+    }//GEN-LAST:event_btnActualizarActionPerformed
+public void Limpiar()
+{
+txtCodigo.setText("");
+txtNombre.setText("");
+txtDescricion.setText("");
+txtNombre.requestFocus();
+}
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+    if(!txtCodigo.getText().trim().isEmpty())
+    {
+        try 
+        {
+        Equipos obje = new Equipos();
+        obje.setCodiEqui(Integer.parseInt(txtCodigo.getText()));
+        if(new EquipoCtrl().eliminar(obje))
+        {
+        JOptionPane.showMessageDialog(this,"Elimanado Exitoso");
+        Limpiar();
+        Refresh2();
+        }
+        else
+        {
+        JOptionPane.showMessageDialog(this, "Ocurrio algo y no se puede elimianr");
+        }
+        } catch (Exception e) {
+        }
+    }
+     else
+    {
+    JOptionPane.showMessageDialog(this, "Porfavor seleccione el elemento a eliminar");
+    }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+    Limpiar();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -243,6 +400,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnSave;
     private javax.swing.JLabel jLabel3;
@@ -254,9 +414,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblCodigo;
     private javax.swing.JLabel lblNombre;
+    private javax.swing.JTable tblEquipos;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtDescricion;
     private javax.swing.JTextField txtNombre;
