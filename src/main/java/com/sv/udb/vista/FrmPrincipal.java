@@ -263,7 +263,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
       }
        else
       {
-          System.out.println("revise que este lleno");
+         JOptionPane.showMessageDialog(this,"Revise que este lleno");
       }
     }//GEN-LAST:event_btnSaveActionPerformed
 
