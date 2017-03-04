@@ -57,6 +57,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btnDelete = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
+        lblNombreJ = new javax.swing.JLabel();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -167,7 +168,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addComponent(btnLimpiar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -205,15 +206,23 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Equipos", jPanel1);
 
+        lblNombreJ.setText("Nombre Jugador");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 620, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(lblNombreJ)
+                .addContainerGap(568, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 311, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(lblNombreJ)
+                .addContainerGap(272, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Jugadores", jPanel2);
@@ -416,6 +425,7 @@ txtNombre.requestFocus();
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JLabel lblCodigo;
     private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblNombreJ;
     private javax.swing.JTable tblEquipos;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtDescricion;
