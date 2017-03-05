@@ -110,7 +110,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         txtFecha = new com.toedter.calendar.JDateChooser();
         jspHora = new javax.swing.JSpinner();
         lblMinutos = new javax.swing.JLabel();
-        jspHora1 = new javax.swing.JSpinner();
+        jspMinutos = new javax.swing.JSpinner();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnSaveP = new javax.swing.JButton();
@@ -473,7 +473,19 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         txtFecha.setDateFormatString("dd-MM-yyyy");
 
+        jspHora.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jspHoraStateChanged(evt);
+            }
+        });
+
         lblMinutos.setText("Minutos");
+
+        jspMinutos.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jspMinutosStateChanged(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -554,11 +566,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblHora)
-                                    .addComponent(jspHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(26, 26, 26)
+                                    .addComponent(jspHora, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblMinutos)
-                                    .addComponent(jspHora1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jspMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -567,7 +579,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
                                             .addComponent(lblEquipo1)
                                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                 .addComponent(txtEquiM1, javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(txtCodigoP, javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addComponent(lblCodigoP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                             .addComponent(lblMarcador1)))
                                     .addComponent(lblFecha))
@@ -577,9 +588,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
                                     .addComponent(lblMarcador2)
                                     .addComponent(cmbEqui2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtEquiM2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCodigoP, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20))
@@ -600,9 +610,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(lblCodigoP)
-                        .addGap(7, 7, 7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtCodigoP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(12, 12, 12)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblEquipo1)
                             .addComponent(lblEquipo2))
@@ -619,19 +629,19 @@ public class FrmPrincipal extends javax.swing.JFrame {
                             .addComponent(txtEquiM1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtEquiM2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(lblFecha)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblFecha)
+                        .addGap(11, 11, 11)
+                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                                 .addComponent(lblHora)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jspHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                                 .addComponent(lblMinutos)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jspHora1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jspMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblLugar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1069,7 +1079,7 @@ txtCodigoP.setText("");
          obj.setMarcador(Integer.parseInt(txtEquiM1.getText()));
          obj.setMarcador2(Integer.parseInt(txtEquiM2.getText()));
           SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
-          String fechF = formateador.format(txtFecha.getDate())+jspHora.getValue()+":"+jspHora1.getValue()+":00";
+          String fechF = formateador.format(txtFecha.getDate())+jspHora.getValue()+":"+jspMinutos.getValue()+":00";
          obj.setFecha(fechF);
          obj.setLugar(txtLugarP.getText());
          
@@ -1110,6 +1120,21 @@ txtCodigoP.setText("");
      }
      
     }//GEN-LAST:event_cmbEqui1ItemStateChanged
+
+    private void jspHoraStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jspHoraStateChanged
+     if(jspHora.getValue().hashCode() < 0 )
+     {
+     jspHora.setValue(0);
+     }
+    }//GEN-LAST:event_jspHoraStateChanged
+
+    private void jspMinutosStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jspMinutosStateChanged
+       if(jspMinutos.getValue().hashCode() < 0 || jspMinutos.getValue().hashCode()> 24 )
+     {
+     jspMinutos.setValue(0);
+        
+     }
+    }//GEN-LAST:event_jspMinutosStateChanged
  
     /**
      * @param args the command line arguments
@@ -1199,7 +1224,7 @@ txtCodigoP.setText("");
     private javax.swing.JTabbedPane jTabbedPane4;
     private javax.swing.JTable jTable1;
     private javax.swing.JSpinner jspHora;
-    private javax.swing.JSpinner jspHora1;
+    private javax.swing.JSpinner jspMinutos;
     private javax.swing.JLabel lblAlturaJ;
     private javax.swing.JLabel lblCodigo;
     private javax.swing.JLabel lblCodigo1;

@@ -528,13 +528,13 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lblHora" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jspHora" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblHora" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jspHora" min="-2" pref="49" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lblMinutos" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jspHora1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblMinutos" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jspMinutos" min="-2" pref="48" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
@@ -545,7 +545,6 @@
                                                   <Component id="lblEquipo1" alignment="0" min="-2" max="-2" attributes="0"/>
                                                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                                                       <Component id="txtEquiM1" alignment="0" max="32767" attributes="0"/>
-                                                      <Component id="txtCodigoP" alignment="0" max="32767" attributes="0"/>
                                                       <Component id="lblCodigoP" alignment="0" max="32767" attributes="0"/>
                                                   </Group>
                                                   <Component id="lblMarcador1" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -561,10 +560,8 @@
                                           <Component id="txtEquiM2" alignment="0" min="-2" pref="69" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                                      <Component id="txtFecha" min="-2" pref="139" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="txtFecha" alignment="0" min="-2" pref="139" max="-2" attributes="0"/>
+                                  <Component id="txtCodigoP" alignment="0" min="-2" pref="70" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace pref="28" max="32767" attributes="0"/>
                               <Component id="jScrollPane3" min="-2" max="-2" attributes="0"/>
@@ -592,9 +589,9 @@
                           <Component id="jScrollPane3" pref="0" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="lblCodigoP" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="txtCodigoP" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="lblEquipo1" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblEquipo2" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -615,20 +612,20 @@
                                   <Component id="txtEquiM2" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="lblFecha" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="txtFecha" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblFecha" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                              <Component id="txtFecha" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
                                       <Component id="lblHora" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jspHora" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
                                       <Component id="lblMinutos" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jspHora1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jspMinutos" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -723,13 +720,19 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JSpinner" name="jspHora">
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jspHoraStateChanged"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lblMinutos">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Minutos"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JSpinner" name="jspHora1">
+            <Component class="javax.swing.JSpinner" name="jspMinutos">
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jspMinutosStateChanged"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane3">
               <AuxValues>
