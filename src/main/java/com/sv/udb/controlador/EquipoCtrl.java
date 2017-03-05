@@ -92,6 +92,43 @@ public class EquipoCtrl {
         }
     return resp;
     }
+    public List<Equipos> ver2(int Codi)
+    {
+    List<Equipos> resp= new ArrayList();
+    Connection cn =new Conexion().getConn();
+        try 
+        {
+           PreparedStatement cmd = cn.prepareStatement("Select * from equipos where codi_equi !=?");
+           cmd.setInt(1,Codi);
+              ResultSet rs = cmd.executeQuery();
+              while (rs.next())
+              {
+              resp.add(new Equipos (rs.getInt(1),rs.getString(2),rs.getString(3)));
+              }
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error:"+e.getMessage());
+        }
+        finally
+        {
+        try
+        {
+        if(cn != null)
+        {
+        if(!cn.isClosed())
+        {
+        cn.close();
+        }
+        }
+        }
+        catch(SQLException err)
+            {
+                err.printStackTrace();
+            }
+        }
+    return resp;
+    }
  public boolean eliminar(Equipos obje)
  {
 boolean resp = false;

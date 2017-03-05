@@ -10,6 +10,7 @@ import com.sv.udb.recursos.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -38,7 +39,25 @@ public class JugadoresCtrl {
         {
             System.out.println("Ocurrio un error: "+e.getMessage());
         }
+             finally
+        {
+           try
+        {
+        if(con != null)
+        {
+        if(!con.isClosed())
+        {
+        con.close();
+        }
+        }
+        }
+        catch(SQLException err)
+            {
+                err.printStackTrace();
+            }
+        }
     return resp;
+    
     }
     public  List<Jugadores> ver()
     {
@@ -57,6 +76,23 @@ public class JugadoresCtrl {
         catch (Exception e) 
         {
             System.out.println("Error: "+e.getMessage());
+        }
+         finally
+        {
+           try
+        {
+        if(con != null)
+        {
+        if(!con.isClosed())
+        {
+        con.close();
+        }
+        }
+        }
+        catch(SQLException err)
+            {
+                err.printStackTrace();
+            }
         }
      return resp;
     }
@@ -82,6 +118,45 @@ public class JugadoresCtrl {
         }
     return resp;
     }
+    public boolean actu2 (Jugadores obj)
+    {
+    Connection con = new Conexion().getConn();
+    boolean resp = false;
+        try 
+        {
+         PreparedStatement cmd = con.prepareStatement("update jugadores set nomb_juga=?, edad_juga=?, altu_juga=?, peso_juga=? where codi_juga=?");
+         cmd.setString(1,obj.getNombreJ());
+         cmd.setInt(2,obj.getEdad());
+         cmd.setDouble(3,obj.getAltura());
+         cmd.setDouble(4,obj.getPeso());
+         cmd.setInt(5,obj.getCodiJ());
+         cmd.executeUpdate();
+         resp=true;
+       
+        }
+        catch (Exception e) 
+        {
+            JOptionPane.showMessageDialog(null,"Error:"+e.getMessage());
+        }
+        finally
+        {
+           try
+        {
+        if(con != null)
+        {
+        if(!con.isClosed())
+        {
+        con.close();
+        }
+        }
+        }
+        catch(SQLException err)
+            {
+                err.printStackTrace();
+            }
+        }
+    return resp;
+    }
     public boolean elim(Jugadores obj)
     {
     boolean resp=false;
@@ -96,6 +171,23 @@ public class JugadoresCtrl {
         catch (Exception e)
         {
             System.out.println("Error:"+e.getMessage());
+        }
+         finally
+        {
+           try
+        {
+        if(con != null)
+        {
+        if(!con.isClosed())
+        {
+        con.close();
+        }
+        }
+        }
+        catch(SQLException err)
+            {
+                err.printStackTrace();
+            }
         }
     return resp;
     }
