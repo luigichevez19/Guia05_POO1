@@ -6,9 +6,12 @@
 package com.sv.udb.vista;
 
 import com.sv.udb.controlador.EquipoCtrl;
+import com.sv.udb.controlador.JugadoresCtrl;
 import com.sv.udb.modelo.Equipos;
+import com.sv.udb.modelo.Jugadores;
 import com.sv.udb.recursos.Conexion;
 import java.sql.Connection;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,7 +28,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         txtCodigo.enable(false);
-         
+        txtCodigoJ.enable(false);
+         LlenarCombox();
     }
 
     /**
@@ -58,6 +62,24 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btnLimpiar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         lblNombreJ = new javax.swing.JLabel();
+        txtNombreJ = new javax.swing.JTextField();
+        lblEdadJ = new javax.swing.JLabel();
+        txtEdadJ = new javax.swing.JTextField();
+        lblAlturaJ = new javax.swing.JLabel();
+        lblPesoJ = new javax.swing.JLabel();
+        lblEquipoJ = new javax.swing.JLabel();
+        txtAlturaJ = new javax.swing.JTextField();
+        txtPeso = new javax.swing.JTextField();
+        cmbEquipos = new javax.swing.JComboBox();
+        btnSave2 = new javax.swing.JButton();
+        btnActualizar2 = new javax.swing.JButton();
+        btnDelete2 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblJugadores = new javax.swing.JTable();
+        btnLimpiar2 = new javax.swing.JButton();
+        btnRefresh1 = new javax.swing.JButton();
+        lblCodigoJ = new javax.swing.JLabel();
+        txtCodigoJ = new javax.swing.JTextField();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -168,7 +190,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addComponent(btnLimpiar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -197,7 +219,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     .addComponent(btnDelete))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnLimpiar)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -208,21 +230,152 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         lblNombreJ.setText("Nombre Jugador");
 
+        lblEdadJ.setText("Edad");
+
+        lblAlturaJ.setText("Altura");
+
+        lblPesoJ.setText("Peso");
+
+        lblEquipoJ.setText("Equipo");
+
+        cmbEquipos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnSave2.setText("Guardar");
+        btnSave2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSave2ActionPerformed(evt);
+            }
+        });
+
+        btnActualizar2.setText("Modificar");
+        btnActualizar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizar2ActionPerformed(evt);
+            }
+        });
+
+        btnDelete2.setText("Eliminar");
+        btnDelete2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDelete2ActionPerformed(evt);
+            }
+        });
+
+        tblJugadores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Equipo", "Nombre", "Edad", "Altura", "Peso"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblJugadores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblJugadoresMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblJugadores);
+
+        btnLimpiar2.setText("Limpiar");
+        btnLimpiar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiar2ActionPerformed(evt);
+            }
+        });
+
+        btnRefresh1.setText("Refresh");
+        btnRefresh1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefresh1ActionPerformed(evt);
+            }
+        });
+
+        lblCodigoJ.setText("Codigo");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(lblNombreJ)
-                .addContainerGap(568, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblEquipoJ)
+                    .addComponent(lblAlturaJ)
+                    .addComponent(txtAlturaJ, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblEdadJ)
+                    .addComponent(lblNombreJ, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtNombreJ)
+                    .addComponent(txtEdadJ)
+                    .addComponent(lblPesoJ)
+                    .addComponent(txtPeso)
+                    .addComponent(cmbEquipos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblCodigoJ)
+                    .addComponent(txtCodigoJ))
+                .addGap(63, 63, 63)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnSave2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnActualizar2)
+                        .addGap(35, 35, 35)
+                        .addComponent(btnDelete2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLimpiar2)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnRefresh1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(lblNombreJ)
-                .addContainerGap(272, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(lblCodigoJ)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCodigoJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblNombreJ)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNombreJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblEdadJ)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtEdadJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblAlturaJ)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtAlturaJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblPesoJ)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(8, 8, 8)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnSave2)
+                        .addComponent(btnActualizar2)
+                        .addComponent(lblEquipoJ))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnLimpiar2)
+                        .addComponent(btnRefresh1)
+                        .addComponent(btnDelete2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbEquipos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Jugadores", jPanel2);
@@ -277,9 +430,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-      Refresh2();
+      Refresh();
     }//GEN-LAST:event_btnRefreshActionPerformed
-    public void Refresh2 ()
+    public void Refresh ()
     {
          try 
         {
@@ -289,6 +442,39 @@ public class FrmPrincipal extends javax.swing.JFrame {
       {
       model.addRow(new Object[]{temp,temp.getDescEqui()} );
       }    
+        } 
+        catch (Exception e) 
+        {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    public void RefreshJ ()
+    {
+         try 
+        {
+      DefaultTableModel model = (DefaultTableModel)this.tblJugadores.getModel();
+      while(model.getRowCount()>0){model.removeRow(0);}//Limpiando modelo
+      for(Jugadores temp: new JugadoresCtrl().ver())
+      {
+      model.addRow(new Object[]{temp.getNombreE(),temp,temp.getEdad(),temp.getAltura(),temp.getPeso()} );
+      }    
+        } 
+        catch (Exception e) 
+        {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
+     public void LlenarCombox ()
+    {
+         try 
+        {
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+      for(Equipos temp: new EquipoCtrl().ver())
+      {
+      model.addElement(temp);
+      }    
+      cmbEquipos.setModel(model);
         } 
         catch (Exception e) 
         {
@@ -310,6 +496,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     if(!txtCodigo.getText().trim().isEmpty() && !txtNombre.getText().trim().isEmpty() 
     && !txtDescricion.getText().trim().isEmpty())
     {
+         int resp2= JOptionPane.showConfirmDialog(this, "¿Seguro que desea actualizar?");
+     if(resp2==0)
+     { 
         try 
         {
         Equipos obj = new Equipos();
@@ -319,7 +508,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         if(new EquipoCtrl().actu(obj))
         {
         JOptionPane.showMessageDialog(this,"Actualizado existoso");
-        Refresh2();
+        Refresh();
         }
         else
         {
@@ -330,6 +519,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         {
         
         }
+     }
     }
     else
     {
@@ -343,9 +533,22 @@ txtNombre.setText("");
 txtDescricion.setText("");
 txtNombre.requestFocus();
 }
+public void  Limpiar2()
+{
+txtCodigoJ.setText("");
+txtAlturaJ.setText("");
+txtEdadJ.setText("");
+txtNombreJ.setText("");
+txtPeso.setText("");
+txtNombreJ.requestFocus();
+cmbEquipos.setSelectedIndex(0);
+}
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
     if(!txtCodigo.getText().trim().isEmpty())
     {
+     int resp2= JOptionPane.showConfirmDialog(this, "Seguro que desea eliminar a "+txtNombre.getText());
+     if(resp2==0)
+     { 
         try 
         {
         Equipos obje = new Equipos();
@@ -354,14 +557,17 @@ txtNombre.requestFocus();
         {
         JOptionPane.showMessageDialog(this,"Elimanado Exitoso");
         Limpiar();
-        Refresh2();
+        Refresh();
         }
         else
         {
         JOptionPane.showMessageDialog(this, "Ocurrio algo y no se puede elimianr");
         }
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
+        
         }
+     }
     }
      else
     {
@@ -372,6 +578,140 @@ txtNombre.requestFocus();
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
     Limpiar();
     }//GEN-LAST:event_btnLimpiarActionPerformed
+    public boolean veri()
+    {
+    boolean resp = false;
+    if(!txtAlturaJ.getText().trim().isEmpty() &&!txtPeso.getText().trim().isEmpty()
+    && !txtEdadJ.getText().trim().isEmpty() && !txtNombreJ.getText().trim().isEmpty())
+    {
+    resp = true;
+    }
+    return resp;
+    }
+    private void btnSave2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave2ActionPerformed
+    if(veri() && txtCodigoJ.getText().trim().isEmpty())
+    {
+    Equipos obje = (Equipos)this.cmbEquipos.getSelectedItem();
+    Jugadores objet = new Jugadores();
+    if(obje != null)
+    {
+        System.out.println(obje.getCodiEqui());
+    objet.setCodiEqui(obje.getCodiEqui());
+    objet.setNombreJ(txtNombreJ.getText());
+    objet.setEdad(Integer.parseInt(txtEdadJ.getText()));
+    objet.setAltura(Double.parseDouble(txtAlturaJ.getText()));
+    objet.setPeso(Double.parseDouble(txtPeso.getText()));
+    if(new JugadoresCtrl().guar(objet))
+    {
+    JOptionPane.showMessageDialog(this, "Guardado exitoso");
+    RefreshJ();
+    Limpiar2();
+    }
+    else
+    {
+    JOptionPane.showMessageDialog(this, "Ocurrio un error y no se guardo nada");
+    }
+    }
+    }
+     else
+     {
+     JOptionPane.showMessageDialog(this, "Verifique que todos los campos esten llenos o posee un id de jugador en el campo codigo, si es asi para poder guardar de clic en Limpiar");
+     }
+    }//GEN-LAST:event_btnSave2ActionPerformed
+
+    private void btnActualizar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizar2ActionPerformed
+     if(veri())
+     {
+      int resp2= JOptionPane.showConfirmDialog(this, "¿Seguro que quiere actualizar?");
+     if(resp2==0)
+     { 
+         try 
+         {          
+     Jugadores obj = new Jugadores();
+     obj.setCodiJ(Integer.parseInt(txtCodigoJ.getText()));
+      int fila  = tblJugadores.getSelectedRow();
+    Jugadores obje = (Jugadores) this.tblJugadores.getValueAt(fila,1);
+     if(cmbEquipos.getSelectedItem() != obje.getNombreE())
+     {
+     Equipos objEqui = (Equipos)this.cmbEquipos.getSelectedItem();
+     obj.setCodiEqui(objEqui.getCodiEqui());
+     }
+     obj.setCodiEqui(obje.getCodiEqui());
+     obj.setNombreJ(txtNombreJ.getText());
+     obj.setEdad(Integer.parseInt(txtEdadJ.getText()));
+     obj.setAltura(Double.parseDouble(txtAlturaJ.getText()));
+     obj.setPeso(Double.parseDouble(txtPeso.getText()));
+     if(new JugadoresCtrl().actu(obj))
+     {
+     JOptionPane.showMessageDialog(this,"Modificado exitoso");
+     RefreshJ();
+     }
+     else
+     {
+     JOptionPane.showMessageDialog(this,"Ocurrio un error y no se actualizo");
+
+     }
+     } catch (Exception e) 
+     {
+     JOptionPane.showMessageDialog(this, e.getMessage());
+     }
+     }
+     }
+     else
+     {
+     JOptionPane.showMessageDialog(this, "Verifique que todos los campos esten llenos");
+     }
+    }//GEN-LAST:event_btnActualizar2ActionPerformed
+
+    private void btnDelete2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelete2ActionPerformed
+     if(veri())
+     {
+     int resp2= JOptionPane.showConfirmDialog(this, "Seguro que desea eliminar a "+txtNombreJ.getText());
+     if(resp2==0)
+     {    
+     Jugadores obj = new Jugadores();
+     obj.setCodiJ(Integer.parseInt(txtCodigoJ.getText()));
+     if(new JugadoresCtrl().elim(obj))
+     {
+     JOptionPane.showMessageDialog(this, "Eliminado");
+     RefreshJ();
+     Limpiar2();
+     }
+     else
+     {
+     JOptionPane.showMessageDialog(this, "Ocurrio algo inesperado, no se pudo eliminar el jugador");
+     }
+     }
+     }
+      else
+     {
+     JOptionPane.showMessageDialog(this, "Verifique que todos los campos esten llenos");
+     }
+    }//GEN-LAST:event_btnDelete2ActionPerformed
+
+    private void btnLimpiar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiar2ActionPerformed
+    Limpiar2();
+    }//GEN-LAST:event_btnLimpiar2ActionPerformed
+
+    private void btnRefresh1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefresh1ActionPerformed
+     RefreshJ();
+    }//GEN-LAST:event_btnRefresh1ActionPerformed
+
+    private void tblJugadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblJugadoresMouseClicked
+     int fila  = tblJugadores.getSelectedRow();
+      if(fila >= 0)
+    {
+    Jugadores obj = (Jugadores) this.tblJugadores.getValueAt(fila,1);
+    this.txtCodigoJ.setText(String.valueOf(obj.getCodiJ()));
+    this.cmbEquipos.setEditable(true);
+    this.cmbEquipos.setSelectedItem(obj.getNombreE());
+    this.cmbEquipos.setEditable(false);
+    this.txtNombreJ.setText(obj.getNombreJ());
+    this.txtEdadJ.setText(String.valueOf(obj.getEdad()));
+    this.txtAlturaJ.setText(String.valueOf(obj.getAltura()));
+    this.txtPeso.setText(String.valueOf(obj.getPeso()));
+    }
+    }//GEN-LAST:event_tblJugadoresMouseClicked
 
     /**
      * @param args the command line arguments
@@ -410,10 +750,16 @@ txtNombre.requestFocus();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnActualizar2;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnDelete2;
     private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnLimpiar2;
     private javax.swing.JButton btnRefresh;
+    private javax.swing.JButton btnRefresh1;
     private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnSave2;
+    private javax.swing.JComboBox cmbEquipos;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -422,13 +768,25 @@ txtNombre.requestFocus();
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JLabel lblAlturaJ;
     private javax.swing.JLabel lblCodigo;
+    private javax.swing.JLabel lblCodigoJ;
+    private javax.swing.JLabel lblEdadJ;
+    private javax.swing.JLabel lblEquipoJ;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblNombreJ;
+    private javax.swing.JLabel lblPesoJ;
     private javax.swing.JTable tblEquipos;
+    private javax.swing.JTable tblJugadores;
+    private javax.swing.JTextField txtAlturaJ;
     private javax.swing.JTextField txtCodigo;
+    private javax.swing.JTextField txtCodigoJ;
     private javax.swing.JTextField txtDescricion;
+    private javax.swing.JTextField txtEdadJ;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtNombreJ;
+    private javax.swing.JTextField txtPeso;
     // End of variables declaration//GEN-END:variables
 }
