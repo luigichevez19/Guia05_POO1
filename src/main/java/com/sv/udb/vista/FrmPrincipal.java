@@ -1079,7 +1079,7 @@ txtCodigoP.setText("");
          obj.setMarcador(Integer.parseInt(txtEquiM1.getText()));
          obj.setMarcador2(Integer.parseInt(txtEquiM2.getText()));
           SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
-          String fechF = formateador.format(txtFecha.getDate())+jspHora.getValue()+":"+jspMinutos.getValue()+":00";
+          String fechF = formateador.format(txtFecha.getDate())+" "+jspHora.getValue().hashCode()+":"+jspMinutos.getValue().hashCode()+":00";
          obj.setFecha(fechF);
          obj.setLugar(txtLugarP.getText());
          
