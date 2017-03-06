@@ -5,11 +5,6 @@
  */
 package com.sv.udb.modelo;
 
-import java.sql.Date;
-
-
-
-
 
 /**
  *
@@ -17,19 +12,45 @@ import java.sql.Date;
  */
 public class Partidos {
    private int Id_partido,codi_equi1,codi_equi2,marcador,marcador2;
-   private String fecha;
+   private String fecha,hora,nomb_equi1,nomb_equi2;
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
    private String lugar;
+  
+    public String getNomb_equi1() {
+        return nomb_equi1;
+    }
+
+    public void setNomb_equi1(String nomb_equi1) {
+        this.nomb_equi1 = nomb_equi1;
+    }
+
+    public String getNomb_equi2() {
+        return nomb_equi2;
+    }
+
+    public void setNomb_equi2(String nomb_equi2) {
+        this.nomb_equi2 = nomb_equi2;
+    }
+   
 
     public Partidos() {
     }
 
-    public Partidos(int Id_partido, int codi_equi1, int codi_equi2, int marcador, int marcador2, String fecha, String lugar) {
+    public Partidos(int Id_partido, String nomb_equi1, String nomb_equi2, int marcador, int marcador2, String fecha,String hora, String lugar) {
         this.Id_partido = Id_partido;
-        this.codi_equi1 = codi_equi1;
-        this.codi_equi2 = codi_equi2;
+        this.nomb_equi1 = nomb_equi1;
+        this.nomb_equi2 = nomb_equi2;
         this.marcador = marcador;
         this.marcador2 = marcador2;
         this.fecha = fecha;
+        this.hora = hora;
         this.lugar = lugar;
     }
 

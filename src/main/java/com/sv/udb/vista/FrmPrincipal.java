@@ -7,11 +7,13 @@ package com.sv.udb.vista;
 
 import com.sv.udb.controlador.EquipoCtrl;
 import com.sv.udb.controlador.JugadoresCtrl;
+import com.sv.udb.controlador.PartidosCtrl;
 import com.sv.udb.modelo.Equipos;
 import com.sv.udb.modelo.Jugadores;
 import com.sv.udb.modelo.Partidos;
 import com.sv.udb.recursos.Conexion;
 import java.sql.Connection;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,6 +36,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         txtCodigo.enable(false);
         txtCodigoJ.enable(false);
+        txtCodigoP.enable(false);
          LlenarCombox();
          LlenarComboxEP();
          Date fecha = new Date();
@@ -103,8 +106,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         lblMarcador1 = new javax.swing.JLabel();
         lblMarcador2 = new javax.swing.JLabel();
         txtCodigoP = new javax.swing.JTextField();
-        txtEquiM1 = new javax.swing.JTextField();
-        txtEquiM2 = new javax.swing.JTextField();
         cmbEqui1 = new javax.swing.JComboBox();
         cmbEqui2 = new javax.swing.JComboBox();
         txtFecha = new com.toedter.calendar.JDateChooser();
@@ -112,7 +113,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         lblMinutos = new javax.swing.JLabel();
         jspMinutos = new javax.swing.JSpinner();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblPartidos = new javax.swing.JTable();
         btnSaveP = new javax.swing.JButton();
         btnActualizarP = new javax.swing.JButton();
         btnDeleteP = new javax.swing.JButton();
@@ -120,6 +121,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btnRefreshP = new javax.swing.JButton();
         txtLugarP = new javax.swing.JTextField();
         lblLugar = new javax.swing.JLabel();
+        txtEquiM1 = new javax.swing.JSpinner();
+        txtEquiM2 = new javax.swing.JSpinner();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -144,6 +147,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ejercicio Conexion");
+
+        jTabbedPane2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPane2MouseClicked(evt);
+            }
+        });
 
         lblCodigo.setText("Codigo:");
 
@@ -243,7 +252,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addComponent(btnLimpiar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 172, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -389,7 +398,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnRefresh1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(145, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -448,12 +457,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         lblMarcador2.setText("Marcador 2");
 
-        txtEquiM1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEquiM1ActionPerformed(evt);
-            }
-        });
-
         cmbEqui1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cmbEqui1MouseClicked(evt);
@@ -487,7 +490,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblPartidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -495,7 +498,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Equipo 1", "Equipo 2", "Marcador 1", "Marcador 2", "Fecha", "Hora", "Lugar"
+                "Equipo 1", "Equipo 2", "Marcador 1", "Marcador 2", "Fecha Partido", "Hora", "Lugar"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -506,7 +509,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(jTable1);
+        tblPartidos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblPartidosMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tblPartidos);
 
         btnSaveP.setText("Guardar");
         btnSaveP.addActionListener(new java.awt.event.ActionListener() {
@@ -545,6 +553,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         lblLugar.setText("Lugar");
 
+        txtEquiM1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                txtEquiM1StateChanged(evt);
+            }
+        });
+
+        txtEquiM2.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                txtEquiM2StateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -553,12 +573,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(txtLugarP, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtLugarP, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSaveP, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(63, 63, 63)
+                        .addGap(85, 85, 85)
                         .addComponent(btnActualizarP)
-                        .addGap(53, 53, 53)
+                        .addGap(88, 88, 88)
                         .addComponent(btnDeleteP, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(83, 83, 83))
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -577,21 +597,21 @@ public class FrmPrincipal extends javax.swing.JFrame {
                                         .addComponent(cmbEqui1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(lblEquipo1)
-                                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(txtEquiM1, javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(lblCodigoP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addComponent(lblCodigoP)
                                             .addComponent(lblMarcador1)))
-                                    .addComponent(lblFecha))
+                                    .addComponent(lblFecha)
+                                    .addComponent(txtEquiM1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblEquipo2)
-                                    .addComponent(lblMarcador2)
                                     .addComponent(cmbEqui2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtEquiM2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(txtEquiM2, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblMarcador2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                             .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtCodigoP, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
                         .addGap(20, 20, 20))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(btnRefreshP, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -624,11 +644,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblMarcador1)
                             .addComponent(lblMarcador2))
-                        .addGap(12, 12, 12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtEquiM1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtEquiM2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(17, 17, 17)
                         .addComponent(lblFecha)
                         .addGap(11, 11, 11)
                         .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -743,7 +763,22 @@ public class FrmPrincipal extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
-    
+     public void RefreshP ()
+    {
+         try 
+        {
+      DefaultTableModel model = (DefaultTableModel)this.tblPartidos.getModel();
+      while(model.getRowCount()>0){model.removeRow(0);}//Limpiando modelo
+      for(Partidos temp: new PartidosCtrl().ver())
+      {   
+      model.addRow(new Object[]{temp.getNomb_equi1(),temp.getNomb_equi2(),temp.getMarcador(),temp.getMarcador2(),temp.getFecha(),temp.getHora(),temp} );
+      }    
+        } 
+        catch (Exception e) 
+        {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
      public void LlenarCombox ()
     {
          try 
@@ -858,11 +893,16 @@ cmbEquipos.setSelectedIndex(0);
 }
 public void Limpiar3()
 {
-txtEquiM1.setText("");
-txtEquiM2.setText("");
+txtEquiM1.setValue(0);
+txtEquiM2.setValue(0);
 cmbEqui1.setSelectedIndex(0);
 txtCodigoP.setText("");
-
+jspHora.setValue(0);
+jspMinutos.setValue(0);
+txtLugarP.setText("");
+cmbEqui1.setSelectedIndex(0);
+Date fecha = new Date();
+txtFecha.setDate(fecha);
 }
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
     if(!txtCodigo.getText().trim().isEmpty())
@@ -1044,16 +1084,12 @@ txtCodigoP.setText("");
     public boolean verificar()
     {
     boolean resp=false;
-    if(!txtLugarP.getText().trim().isEmpty()&&cmbEqui1.getSelectedIndex()>0 && !txtEquiM1.getText().trim().isEmpty() && !txtEquiM2.getText().trim().isEmpty()&& txtCodigoP.getText().isEmpty())
+    if(!txtLugarP.getText().trim().isEmpty()&&cmbEqui1.getSelectedIndex()>0&& txtCodigoP.getText().isEmpty())
     {
     resp=true;
     }
     return resp;
     }
-    private void txtEquiM1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEquiM1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEquiM1ActionPerformed
-
     private void cmbEqui1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbEqui1MouseClicked
    
     }//GEN-LAST:event_cmbEqui1MouseClicked
@@ -1076,27 +1112,101 @@ txtCodigoP.setText("");
          obj.setCodi_equi1(objEqui.getCodiEqui());
          Equipos objEqui2 = (Equipos)this.cmbEqui2.getSelectedItem();
          obj.setCodi_equi2(objEqui2.getCodiEqui());
-         obj.setMarcador(Integer.parseInt(txtEquiM1.getText()));
-         obj.setMarcador2(Integer.parseInt(txtEquiM2.getText()));
+         obj.setMarcador(txtEquiM1.getValue().hashCode());
+         obj.setMarcador2(txtEquiM2.getValue().hashCode());
           SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
           String fechF = formateador.format(txtFecha.getDate())+" "+jspHora.getValue().hashCode()+":"+jspMinutos.getValue().hashCode()+":00";
          obj.setFecha(fechF);
          obj.setLugar(txtLugarP.getText());
-         
+         if(new PartidosCtrl().guar(obj))
+         {
+         JOptionPane.showMessageDialog(this, "Guadado exitoso");
+         }
+         else
+         {
+         JOptionPane.showMessageDialog(this,"Ocurrio un error y no se guardo" );
+         }
          }
          catch (Exception e) 
          {
          JOptionPane.showMessageDialog(this, e.getMessage());
          }
      }
+         else
+     {
+     JOptionPane.showMessageDialog(this,"Verifique que los datos esten llenos");
+     }
     }//GEN-LAST:event_btnSavePActionPerformed
 
     private void btnActualizarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarPActionPerformed
-        // TODO add your handling code here:
+     if(!txtCodigoP.getText().trim().isEmpty())
+     {
+         int resp = JOptionPane.showConfirmDialog(this, "¿Esta seguro que desee a actualizar este elemento?");
+         if(resp == 0)
+         {
+         try
+         {
+         Partidos obj = new Partidos();
+         obj.setId_partido(Integer.parseInt(txtCodigoP.getText()));
+         Equipos objEqui = (Equipos)this.cmbEqui1.getSelectedItem();
+         obj.setCodi_equi1(objEqui.getCodiEqui());
+         Equipos objEqui2 = (Equipos)this.cmbEqui2.getSelectedItem();
+         obj.setCodi_equi2(objEqui2.getCodiEqui());
+          obj.setMarcador(txtEquiM1.getValue().hashCode());
+         obj.setMarcador2(txtEquiM2.getValue().hashCode());
+          SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
+          String fechF = formateador.format(txtFecha.getDate())+" "+jspHora.getValue().hashCode()+":"+jspMinutos.getValue().hashCode()+":00";
+         obj.setFecha(fechF);
+         obj.setLugar(txtLugarP.getText());
+         if(new PartidosCtrl().actu(obj))
+         {
+         JOptionPane.showMessageDialog(this, "Actualizado");
+         RefreshP();
+         }
+         else
+         {
+         JOptionPane.showMessageDialog(this,"Ocurrio un error y no se guardo" );
+         }
+         }
+         catch (Exception e) 
+         {
+         JOptionPane.showMessageDialog(this, e.getMessage());
+         }
+         }
+     }
+     else
+     {
+     JOptionPane.showMessageDialog(this,"Verifique que los datos esten llenos");
+     }
     }//GEN-LAST:event_btnActualizarPActionPerformed
 
     private void btnDeletePActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletePActionPerformed
-        // TODO add your handling code here:
+     if(!txtCodigoP.getText().trim().isEmpty())
+     {
+         try 
+         {
+         int resp = JOptionPane.showConfirmDialog(this, "¿Esta seguro que desea eliminar este partido?");
+         if(resp==0)
+         {
+         Partidos obje = new Partidos();
+         obje.setId_partido(Integer.parseInt(txtCodigoP.getText()));
+         if(new PartidosCtrl().elim(obje))
+         {
+         JOptionPane.showMessageDialog(this, "Eliminado");
+         Limpiar3();
+         RefreshP();
+         }
+         else
+         {
+         JOptionPane.showMessageDialog(this, "Ocurrio un erro inesperado, el partido no se elimino");
+         }
+         }
+         } 
+         catch (Exception e) 
+         {
+         JOptionPane.showMessageDialog(this, e.getMessage());
+         }
+     }
     }//GEN-LAST:event_btnDeletePActionPerformed
 
     private void btnLimpiarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarPActionPerformed
@@ -1104,7 +1214,7 @@ txtCodigoP.setText("");
     }//GEN-LAST:event_btnLimpiarPActionPerformed
 
     private void btnRefreshPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshPActionPerformed
-        // TODO add your handling code here:
+     RefreshP();
     }//GEN-LAST:event_btnRefreshPActionPerformed
 
     private void cmbEqui1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbEqui1ItemStateChanged
@@ -1122,19 +1232,78 @@ txtCodigoP.setText("");
     }//GEN-LAST:event_cmbEqui1ItemStateChanged
 
     private void jspHoraStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jspHoraStateChanged
-     if(jspHora.getValue().hashCode() < 0 )
+     if(jspHora.getValue().hashCode() < 0 || jspHora.getValue().hashCode()>23)
      {
      jspHora.setValue(0);
      }
     }//GEN-LAST:event_jspHoraStateChanged
 
     private void jspMinutosStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jspMinutosStateChanged
-       if(jspMinutos.getValue().hashCode() < 0 || jspMinutos.getValue().hashCode()> 24 )
+       if(jspMinutos.getValue().hashCode() < 0 || jspMinutos.getValue().hashCode()> 59 )
      {
      jspMinutos.setValue(0);
         
      }
     }//GEN-LAST:event_jspMinutosStateChanged
+
+    private void tblPartidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPartidosMouseClicked
+    int fila = tblPartidos.getSelectedRow();
+    if(fila >= 0)
+    {
+        try 
+        {
+    Partidos obje =(Partidos) this.tblPartidos.getValueAt(fila,6);
+    txtCodigoP.setText(String.valueOf( obje.getId_partido()));
+    cmbEqui1.setEditable(true);
+    cmbEqui1.setSelectedItem(obje.getNomb_equi1());
+    cmbEqui1.setEditable(false);
+    cmbEqui2.setEditable(true);
+    cmbEqui2.setSelectedItem(obje.getNomb_equi2());
+    cmbEqui2.setEditable(false);
+    txtEquiM1.setValue(obje.getMarcador());
+    txtEquiM2.setValue(obje.getMarcador2());
+   String hora= obje.getHora().replaceAll(":","");
+   jspHora.setValue(Integer.parseInt(hora.substring(0,2)));
+   jspMinutos.setValue(Integer.parseInt(hora.substring(2,4)));
+   SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
+    Date dato = null;
+    try {
+
+    dato = formatoDelTexto.parse(obje.getFecha());
+
+    } catch (ParseException ex) {
+
+    ex.printStackTrace();
+
+    }
+  txtFecha.setDate(dato);
+   txtLugarP.setText(obje.getLugar());
+   }
+   catch (Exception e)
+   {
+   JOptionPane.showMessageDialog(this, "Error: "+e.getMessage());
+    }
+    }
+    }//GEN-LAST:event_tblPartidosMouseClicked
+
+    private void txtEquiM1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_txtEquiM1StateChanged
+     if(txtEquiM1.getValue().hashCode() < 0 )
+     {
+     txtEquiM1.setValue(0);
+     }
+    }//GEN-LAST:event_txtEquiM1StateChanged
+
+    private void txtEquiM2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_txtEquiM2StateChanged
+     if(txtEquiM2.getValue().hashCode() < 0 )
+     {
+     txtEquiM2.setValue(0);
+     }
+    }//GEN-LAST:event_txtEquiM2StateChanged
+
+    private void jTabbedPane2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane2MouseClicked
+     LlenarCombox();
+     LlenarComboxEP();
+    }//GEN-LAST:event_jTabbedPane2MouseClicked
  
     /**
      * @param args the command line arguments
@@ -1222,7 +1391,6 @@ txtCodigoP.setText("");
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JTabbedPane jTabbedPane4;
-    private javax.swing.JTable jTable1;
     private javax.swing.JSpinner jspHora;
     private javax.swing.JSpinner jspMinutos;
     private javax.swing.JLabel lblAlturaJ;
@@ -1250,6 +1418,7 @@ txtCodigoP.setText("");
     private javax.swing.JTable tblEquipos1;
     private javax.swing.JTable tblEquipos2;
     private javax.swing.JTable tblJugadores;
+    private javax.swing.JTable tblPartidos;
     private javax.swing.JTextField txtAlturaJ;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtCodigo1;
@@ -1260,8 +1429,8 @@ txtCodigoP.setText("");
     private javax.swing.JTextField txtDescricion1;
     private javax.swing.JTextField txtDescricion2;
     private javax.swing.JTextField txtEdadJ;
-    private javax.swing.JTextField txtEquiM1;
-    private javax.swing.JTextField txtEquiM2;
+    private javax.swing.JSpinner txtEquiM1;
+    private javax.swing.JSpinner txtEquiM2;
     private com.toedter.calendar.JDateChooser txtFecha;
     private javax.swing.JTextField txtLugarP;
     private javax.swing.JTextField txtNombre;

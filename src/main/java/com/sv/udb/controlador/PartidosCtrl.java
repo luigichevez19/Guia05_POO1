@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -64,20 +65,21 @@ public class PartidosCtrl {
     Connection con = new Conexion().getConn();
         try 
         {
-        PreparedStatement cmd = con.prepareStatement("update partidos set codi_equi=?,codi_equi2=?, marcador=?,marcador2=?"
-        + ",Fecha=?, Lugar=?");
+        PreparedStatement cmd = con.prepareStatement("update partidos set codi_equi=?,codi_equi2=?, marcador=?,marcador2=?,"
+        + "Fecha=?, Lugar=? where Id_partido=?");
         cmd.setInt(1,obj.getCodi_equi1());
         cmd.setInt(2,obj.getCodi_equi2());
         cmd.setInt(3,obj.getMarcador());
         cmd.setInt(4,obj.getMarcador2());
         cmd.setString(5,obj.getFecha());
         cmd.setString(6,obj.getLugar());
+       cmd.setInt(7, obj.getId_partido());
         cmd.executeUpdate();
         resp=true;
         }
         catch (Exception e) 
         {
-            System.out.println("Error:"+e.getMessage());
+           JOptionPane.showMessageDialog(null,"Ocurrio un error y no se guardo" );
         }
         finally
         {
@@ -138,16 +140,18 @@ public class PartidosCtrl {
     Connection cn =new Conexion().getConn();
         try 
         {
-           PreparedStatement cmd = cn.prepareStatement("Select * from partidos");
+           PreparedStatement cmd = cn.prepareStatement("Select d.Id_partido, d.nomb_equi,dd.nomb_equi,dd.marcador,"
+         + "dd.marcador2, dd.Fecha,dd.Hora,dd.Lugar from Datos d, Datos2 dd "
+          + "where dd.Id_partido = d.Id_partido  group by dd.Id_partido");
               ResultSet rs = cmd.executeQuery();
               while (rs.next())
               {
-              resp.add(new Partidos(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getInt(4),rs.getInt(5),rs.getDate(6).toString(),rs.getString(7)));
+              resp.add(new Partidos(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getInt(5),rs.getDate(6).toString(),rs.getString(7),rs.getString(8)));
               }
         }
         catch (Exception e)
         {
-        e.printStackTrace();
+       JOptionPane.showMessageDialog(null, e.getMessage());
         }
         finally
         {
