@@ -771,7 +771,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
       while(model.getRowCount()>0){model.removeRow(0);}//Limpiando modelo
       for(Partidos temp: new PartidosCtrl().ver())
       {   
-      model.addRow(new Object[]{temp.getNomb_equi1(),temp.getNomb_equi2(),temp.getMarcador(),temp.getMarcador2(),temp.getFecha(),temp.getHora(),temp} );
+      model.addRow(new Object[]{temp.getNomb_equi1(),temp.getNomb_equi2(),temp.getMarcador(),temp.getMarcador2(),temp.getFecha(),temp.getHora().substring(0, 5),temp} );
       }    
         } 
         catch (Exception e) 
