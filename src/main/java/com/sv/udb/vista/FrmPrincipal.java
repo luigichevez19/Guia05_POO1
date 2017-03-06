@@ -575,10 +575,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(txtLugarP, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRefreshP, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLimpiarP)
+                        .addGap(45, 45, 45)
                         .addComponent(btnSaveP, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(85, 85, 85)
+                        .addGap(18, 18, 18)
                         .addComponent(btnActualizarP)
-                        .addGap(88, 88, 88)
+                        .addGap(37, 37, 37)
                         .addComponent(btnDeleteP, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(83, 83, 83))
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -609,25 +613,17 @@ public class FrmPrincipal extends javax.swing.JFrame {
                                         .addComponent(txtEquiM2, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(lblMarcador2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                             .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCodigoP, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCodigoP, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblLugar))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
-                        .addGap(20, 20, 20))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(btnRefreshP, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnLimpiarP)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(lblLugar)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(lblCodigoP)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -661,20 +657,19 @@ public class FrmPrincipal extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                                 .addComponent(lblMinutos)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jspMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblLugar)
+                                .addComponent(jspMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblLugar))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSaveP)
                     .addComponent(btnActualizarP)
                     .addComponent(btnDeleteP)
-                    .addComponent(txtLugarP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtLugarP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRefreshP)
                     .addComponent(btnLimpiarP))
-                .addContainerGap())
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Partidos", jPanel4);
@@ -1342,36 +1337,24 @@ txtFecha.setDate(fecha);
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
-    private javax.swing.JButton btnActualizar1;
     private javax.swing.JButton btnActualizar2;
-    private javax.swing.JButton btnActualizar3;
     private javax.swing.JButton btnActualizarP;
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnDelete1;
     private javax.swing.JButton btnDelete2;
-    private javax.swing.JButton btnDelete3;
     private javax.swing.JButton btnDeleteP;
     private javax.swing.JButton btnLimpiar;
-    private javax.swing.JButton btnLimpiar1;
     private javax.swing.JButton btnLimpiar2;
-    private javax.swing.JButton btnLimpiar3;
     private javax.swing.JButton btnLimpiarP;
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnRefresh1;
-    private javax.swing.JButton btnRefresh2;
-    private javax.swing.JButton btnRefresh3;
     private javax.swing.JButton btnRefreshP;
     private javax.swing.JButton btnSave;
-    private javax.swing.JButton btnSave1;
     private javax.swing.JButton btnSave2;
-    private javax.swing.JButton btnSave3;
     private javax.swing.JButton btnSaveP;
     private javax.swing.JComboBox cmbEqui1;
     private javax.swing.JComboBox cmbEqui2;
     private javax.swing.JComboBox cmbEquipos;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -1381,22 +1364,14 @@ txtFecha.setDate(fecha);
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTabbedPane jTabbedPane3;
-    private javax.swing.JTabbedPane jTabbedPane4;
     private javax.swing.JSpinner jspHora;
     private javax.swing.JSpinner jspMinutos;
     private javax.swing.JLabel lblAlturaJ;
     private javax.swing.JLabel lblCodigo;
-    private javax.swing.JLabel lblCodigo1;
-    private javax.swing.JLabel lblCodigo2;
     private javax.swing.JLabel lblCodigoJ;
     private javax.swing.JLabel lblCodigoP;
     private javax.swing.JLabel lblEdadJ;
@@ -1410,32 +1385,22 @@ txtFecha.setDate(fecha);
     private javax.swing.JLabel lblMarcador2;
     private javax.swing.JLabel lblMinutos;
     private javax.swing.JLabel lblNombre;
-    private javax.swing.JLabel lblNombre1;
-    private javax.swing.JLabel lblNombre2;
     private javax.swing.JLabel lblNombreJ;
     private javax.swing.JLabel lblPesoJ;
     private javax.swing.JTable tblEquipos;
-    private javax.swing.JTable tblEquipos1;
-    private javax.swing.JTable tblEquipos2;
     private javax.swing.JTable tblJugadores;
     private javax.swing.JTable tblPartidos;
     private javax.swing.JTextField txtAlturaJ;
     private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtCodigo1;
-    private javax.swing.JTextField txtCodigo2;
     private javax.swing.JTextField txtCodigoJ;
     private javax.swing.JTextField txtCodigoP;
     private javax.swing.JTextField txtDescricion;
-    private javax.swing.JTextField txtDescricion1;
-    private javax.swing.JTextField txtDescricion2;
     private javax.swing.JTextField txtEdadJ;
     private javax.swing.JSpinner txtEquiM1;
     private javax.swing.JSpinner txtEquiM2;
     private com.toedter.calendar.JDateChooser txtFecha;
     private javax.swing.JTextField txtLugarP;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtNombre1;
-    private javax.swing.JTextField txtNombre2;
     private javax.swing.JTextField txtNombreJ;
     private javax.swing.JTextField txtPeso;
     // End of variables declaration//GEN-END:variables
