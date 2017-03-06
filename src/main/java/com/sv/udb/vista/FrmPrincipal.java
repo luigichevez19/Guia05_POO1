@@ -1260,13 +1260,14 @@ txtFecha.setDate(fecha);
    jspMinutos.setValue(Integer.parseInt(hora.substring(2,4)));
    SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
     Date dato = null;
-    try {
-
+    try 
+    {
     dato = formatoDelTexto.parse(obje.getFecha());
 
-    } catch (ParseException ex) {
-
-    ex.printStackTrace();
+    }
+    catch (ParseException ex) 
+    {
+    JOptionPane.showMessageDialog(this, ex.getMessage());
 
     }
   txtFecha.setDate(dato);
