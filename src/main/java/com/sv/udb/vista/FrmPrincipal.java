@@ -44,7 +44,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
     txtFecha.setMinSelectableDate(fecha);
      fecha2.setYear(fecha.getYear()+1);
      txtFecha.setMaxSelectableDate(fecha2);
-     
         }
   
     /**
